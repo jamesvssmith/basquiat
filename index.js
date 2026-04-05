@@ -43,4 +43,27 @@ bot.on('message', async (msg) => {
     const response = await client.messages.create({
       model: 'claude-sonnet-4-20250514',
       max_tokens: 1024,
-      system: 'You are Basquiat, a helpful personal assistant for James. Help him
+      system: 'You are Basquiat, a helpful personal assistant for James. Help him with work emails, scheduling, newsletters, and daily tasks. Be concise and friendly. When James asks to save something, include SAVE_TO_DRIVE:filename at the end of your response.',
+      messages: conversations[chatId]
+    });
+
+    let reply = response.content[0].text;
+
+    if (reply.includes('SAVE_TO_DRIVE:')) {
+      const parts = reply.split('SAVE_TO_DRIVE:');
+      const contentToSave = parts[0].trim();
+      const filename = parts[1].trim();
+      bot.sendMessage(chatId, 'Saving to Google Drive...');
+      const link = await saveToGoogleDrive(contentToSave, filename);
+      reply = contentToSave + (link ? '\n\nSaved to Drive: ' + link : '\n\nCould not save to Drive.');
+    }
+
+    conversations[chatId].push({ role: 'assistant', content: reply });
+    bot.sendMessage(chatId, reply);
+  } catch (error) {
+    bot.sendMessage(chatId, 'Sorry, something went wrong. Try again in a moment.');
+    console.error(error);
+  }
+});
+
+console.log('Basquiat is running with Google Drive support...');
