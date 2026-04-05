@@ -21,6 +21,7 @@ const drive = google.drive({ version: 'v3', auth });
 async function saveToGoogleDrive(content, filename) {
   try {
     const file = await drive.files.create({
+      supportsAllDrives: true,
       requestBody: {
         name: filename,
         mimeType: 'application/vnd.google-apps.document',
