@@ -6,6 +6,7 @@ const { google } = require('googleapis');
 const TELEGRAM_TOKEN = process.env.TELEGRAM_TOKEN;
 const ANTHROPIC_API_KEY = process.env.ANTHROPIC_API_KEY;
 const GOOGLE_CREDENTIALS = JSON.parse(process.env.GOOGLE_CREDENTIALS);
+const FOLDER_ID = '1iDCBiT8AZKOrh-BDosxwchZv7xbzz76S';
 
 const bot = new TelegramBot(TELEGRAM_TOKEN, { polling: true });
 const client = new Anthropic({ apiKey: ANTHROPIC_API_KEY });
@@ -20,7 +21,11 @@ const drive = google.drive({ version: 'v3', auth });
 async function saveToGoogleDrive(content, filename) {
   try {
     const file = await drive.files.create({
-      requestBody: { name: filename, mimeType: 'application/vnd.google-apps.document' },
+      requestBody: {
+        name: filename,
+        mimeType: 'application/vnd.google-apps.document',
+        parents: [FOLDER_ID]
+      },
       media: { mimeType: 'text/plain', body: content },
       fields: 'id, webViewLink',
     });
