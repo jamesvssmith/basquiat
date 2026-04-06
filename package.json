@@ -1,18 +1,18 @@
 {
-  "name": "basquiat",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "@anthropic-ai/sdk": "^0.82.0",
-    "dotenv": "^17.4.0",
-    "googleapis": "^171.4.0",
-    "node-telegram-bot-api": "^0.67.0"
-  }
+    "name": "basquiat",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+          "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+          "@anthropic-ai/sdk": "^0.82.0",
+          "@notionhq/client": "^2.2.15",
+          "dotenv": "^17.4.0",
+          "node-telegram-bot-api": "^0.67.0"
+    }
 }
